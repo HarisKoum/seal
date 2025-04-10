@@ -1,13 +1,12 @@
 // Copyright (c), Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
 import { Box, Button, Card, Container, Flex, Grid } from '@radix-ui/themes';
 import { CreateAllowlist } from './CreateAllowlist';
 import { Allowlist } from './Allowlist';
 import WalrusUpload from './EncryptAndUpload';
-import { useState } from 'react';
 import { CreateService } from './CreateSubscriptionService';
 import FeedsToSubscribe from './SubscriptionView';
 import { Service } from './SubscriptionService';
@@ -22,34 +21,29 @@ function LandingPage() {
       <Card>
         <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
           <div style={{ textAlign: 'center' }}>
-            <h2>Allowlist Example</h2>
+            <h2>Airdrop Whitelist</h2>
             <p>
-              Shows how a creator can define an allowlist based access. The creator first creates an
-              allowlist and can add or remove users in the list. The creator can then associate
-              encrypted files to the allowlist. Only users in the allowlist have access to decrypt
-              the files.
+              Buat dan kelola whitelist pengguna untuk airdrop crypto. Hanya wallet yang termasuk
+              dalam whitelist yang bisa klaim reward atau vote. Sistem ini mengenkripsi file dan hanya
+              bisa diakses oleh pengguna yang terdaftar.
             </p>
           </div>
           <Link to="/allowlist-example">
-            <Button size="3">Try it</Button>
+            <Button size="3">Coba Sekarang</Button>
           </Link>
         </Flex>
       </Card>
       <Card>
         <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
           <div style={{ textAlign: 'center' }}>
-            <h2>Subscription Example</h2>
+            <h2>Subscription / Vote NFT</h2>
             <p>
-              Shows how a creator can define a subscription based access to its published files. The
-              creator defines subcription fee and how long a subscription is valid for. The creator
-              can then associate encrypted files to the service. Only users who have purchased a
-              subscription (NFT) have access to decrypt the files, along with the condition that the
-              subscription must not have expired (i.e. the subscription creation timestamp plus the
-              TTL is smaller than the current clock time).
+              Gunakan sistem NFT berbasis subscription untuk memberikan hak suara kepada pemegang token.
+              Sistem ini hanya memberikan akses ke file/vote bagi yang memiliki NFT dan masih valid.
             </p>
           </div>
           <Link to="/subscription-example">
-            <Button size="3">Try it</Button>
+            <Button size="3">Lihat Contoh</Button>
           </Link>
         </Flex>
       </Card>
@@ -61,31 +55,29 @@ function App() {
   const currentAccount = useCurrentAccount();
   const [recipientAllowlist, setRecipientAllowlist] = useState<string>('');
   const [capId, setCapId] = useState<string>('');
+
   return (
     <Container>
       <Flex position="sticky" px="4" py="2" justify="between">
-        <h1 className="text-4xl font-bold m-4 mb-8">Seal Example Apps</h1>
-        {/* <p>TODO: add seal logo</p> */}
+        <h1 className="text-4xl font-bold m-4 mb-8">Airdrop Crypto Vote</h1>
         <Box>
           <ConnectButton />
         </Box>
       </Flex>
       <Card style={{ marginBottom: '2rem' }}>
         <p>
-          1. Code is available{' '}
-          <a href="https://github.com/MystenLabs/seal/tree/main/examples">here</a>.
+          1. Source code dapat ditemukan di{' '}
+          <a href="https://github.com/MystenLabs/seal/tree/main/examples">GitHub</a>.
         </p>
         <p>
-          2. These examples are for Testnet only. Make sure you wallet is set to Testnet and has
-          some balance (can request from <a href="https://faucet.sui.io/">faucet.sui.io</a>).
+          2. Aplikasi ini berjalan di Testnet. Pastikan wallet kamu terhubung ke Testnet dan punya saldo
+          dari <a href="https://faucet.sui.io/">faucet.sui.io</a>.
         </p>
         <p>
-          3. Blobs are only stored on Walrus Testnet for 1 epoch by default, older files cannot be
-          retrieved even if you have access.
+          3. File yang diupload akan tersedia hanya 1 epoch di Walrus Testnet secara default.
         </p>
         <p>
-          4. Currently only image files are supported, and the UI is minimal, designed for demo
-          purposes only!
+          4. Saat ini hanya mendukung file gambar. UI masih basic, hanya untuk keperluan demo.
         </p>
       </Card>
       {currentAccount ? (
@@ -153,7 +145,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       ) : (
-        <p>Please connect your wallet to continue</p>
+        <p>Silakan sambungkan wallet Anda untuk melanjutkan</p>
       )}
     </Container>
   );
